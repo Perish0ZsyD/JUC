@@ -5,7 +5,7 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        // test for JUC & sleep for juc simulation
+        // test for thread & sleep for juc simulation
         System.out.println("main start..."); // Thread.setPriority(int n); 0~10,默认5, 优先映射到操作系统实际优先级上
         Thread t = new Thread() {
             public void run() {

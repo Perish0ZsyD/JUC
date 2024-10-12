@@ -29,11 +29,11 @@ public class ThreadSynchronizationLearning {
         dec.start();
         add.join();
         dec.join();
-        System.out.println(Couter.count); // 加synchronization锁之前，每次不一样，并发交替运行
+        System.out.println(Counter.count); // 加synchronization锁之前，每次不一样，并发交替运行
     }
 }
 
-class Couter {
+class Counter {
     public static final Object lock = new Object();
     public static int count = 0;
 }
@@ -41,9 +41,9 @@ class Couter {
 class AddThread extends Thread {
     public void run() {
         for (int i = 0; i < 100_000; i++) {
-            synchronized (Couter.lock){ // 获取锁
+            synchronized (Counter.lock){ // 获取锁
                 System.out.println("add acquire lock");
-                Couter.count++;
+                Counter.count++;
             } // 释放锁
             System.out.println("add release lock");
         }
@@ -53,9 +53,9 @@ class AddThread extends Thread {
 class DecThread extends Thread {
     public void run() {
         for (int i = 0; i < 100_000; i++) {
-            synchronized (Couter.lock){
+            synchronized (Counter.lock){
                 System.out.println("dec acquire lock");
-                Couter.count--;
+                Counter.count--;
             }
             System.out.println("dec release lock");
         }

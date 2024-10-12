@@ -19,7 +19,7 @@ public class ThreadLearning {
 //        Thread t = new MyThread();
 //        t.start();
 //        Thread.sleep(1000); // 暂定1000ms
-//        t.interrupt(); // 中断t线程 输出 1 hello!，注意此处是向线程t发出中断请求，能否立即响应需要看t线程代码，比如while循环不断检测isInterrupted
+//        t.interrupt(); // 中断t线程 输出 1 hello!，注意此处是向线程t发出中断请求(置isInterrupted为0)，能否立即响应需要看t线程代码，比如while循环不断检测isInterrupted
 //        t.join(); // 等待t线程结束
 //        System.out.println("main end");
 //    }
@@ -46,14 +46,14 @@ class MyThread extends Thread {
         } catch (InterruptedException e) {
             System.out.println("Interrupted!");
         }
-        hello.interrupt(); // 在t线程结束前，对hello线程也进行了interrupt()调用通知其中断
+        hello.interrupt(); // 在t线程结束前，对hello线程也进行了interrupt()调用通知其中断，这样如果t线程结束，hello线程也会结束
     }
 }
 
 class HelloThread extends Thread {
     public void run() {
         int n = 0;
-        while (!isInterrupted()) {
+        while (!isInterrupted()) { // MyThread -> hello.interrupted()
             n ++;
             System.out.println(n + "hello!");
             try {
