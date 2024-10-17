@@ -32,7 +32,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class ThreadSynchronizationLearning {
     public static void main(String[] args) throws InterruptedException{
-<<<<<<< HEAD
         var add = new AddThread();
         var dec = new DecThread();
         add.start();
@@ -43,20 +42,19 @@ public class ThreadSynchronizationLearning {
     }
 }
 
-class Counter {
-    public static final Object lock = new Object();
-    public static int count = 0;
-}
+//class Counter {
+//    public static final Object lock = new Object();
+//    public static int count = 0;
+//}
 
 class AddThread extends Thread {
     public void run() {
         for (int i = 0; i < 100_000; i++) {
-            synchronized (Counter.lock){ // 获取锁
+            synchronized (Counter.lock) { // 获取锁
                 System.out.println("add acquire lock");
                 Counter.count++;
             } // 释放锁
             System.out.println("add release lock");
-=======
 //        var add = new AddThread();
 //        var dec = new DecThread();
 //        add.start();
@@ -65,6 +63,7 @@ class AddThread extends Thread {
 //        dec.join();
 //        System.out.println(Counter.count); // 加synchronization锁之前，每次不一样，并发交替运行
 
+        }
     }
 }
 
@@ -72,8 +71,9 @@ class AddThread extends Thread {
 // 例如论坛，写评论 不频繁，但是浏览评论很频繁（读取）
 // 读写操作分别加锁，允许读取时多个线程同时获取读锁，但是写时其他线程都必须等（读的时候不能写，悲观的读锁）
 class Counter {
-//    public static final Object lock = new Object();
-//    public static int count = 0;
+    public static Object lock;
+    //    public static final Object lock = new Object();
+    public static int count = 0;
     private final ReadWriteLock rwlock = new ReentrantReadWriteLock();
     // 注意：一对读锁和写锁必须从同一个rwlock获取
     private final Lock readLock = rwlock.readLock();
@@ -95,12 +95,10 @@ class Counter {
             return Arrays.copyOf(counts, counts.length);
         } finally {
             readLock.unlock(); // 释放读锁
->>>>>>> 14a79b55fa3533829d95ace1ba629d59b18e5c89
         }
     }
 }
 
-<<<<<<< HEAD
 class DecThread extends Thread {
     public void run() {
         for (int i = 0; i < 100_000; i++) {
@@ -112,7 +110,7 @@ class DecThread extends Thread {
         }
     }
 }
-=======
+
 //class AddThread extends Thread {
 //    public void run() {
 //        for (int i = 0; i < 100_000; i++) {
@@ -136,7 +134,7 @@ class DecThread extends Thread {
 //        }
 //    }
 //}
->>>>>>> 14a79b55fa3533829d95ace1ba629d59b18e5c89
+
 
 /*
 * wait()方法的执行机制非常复杂。首先，它不是一个普通的Java方法，而是定义在Object类的一个native方法，也就是由JVM的C代码实现的。
